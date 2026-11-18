@@ -770,9 +770,9 @@ int main(void)
 	uint32_t reset_cause = 0;
 	int ret;
 
-	/* Deep STOP modes are opt-in so an unvalidated low-power policy can never
-	 * destabilize the normal watchdog-supervised boot path. power_demo unlocks
-	 * STOP0 for a bounded interval; STOP1 and STOP2 remain locked.
+	/* Keep every deep STOP substate locked. Normal CPU idle and explicit RTC
+	 * alarms are still available, but no power transition may starve the
+	 * two-second worker and hardware-watchdog supervision deadlines.
 	 */
 	pm_policy_state_lock_get(PM_STATE_SUSPEND_TO_IDLE, 1);
 	pm_policy_state_lock_get(PM_STATE_SUSPEND_TO_IDLE, 2);

@@ -65,7 +65,7 @@
 	status = "okay";
 };
 
-/* Internal LSI-clocked RTC keeps kernel time and wakes the CPU from STOP2. */
+/* Internal LSI-clocked RTC provides timekeeping and explicit alarm wakeups. */
 &rtc {
 	clocks = <&rcc STM32_CLOCK(APB1, 28)>,
 		 <&rcc STM32_SRC_LSI RTC_SEL(2)>;

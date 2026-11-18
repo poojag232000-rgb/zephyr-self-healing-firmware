@@ -2,6 +2,9 @@
 
 Firmware-only reliability project for the STM32L4P5ZGT using Zephyr RTOS.
 
+For a complete beginner-friendly explanation, architecture walkthrough,
+testing guide, and interview questions, read [PROJECT_NOTES.md](PROJECT_NOTES.md).
+
 ## Milestone 1: supervised kernel threads
 
 The current application starts two Zephyr threads and supervises each one with
