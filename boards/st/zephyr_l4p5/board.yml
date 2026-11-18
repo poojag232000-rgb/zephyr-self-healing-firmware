@@ -1,0 +1,7 @@
+board:
+  name: zephyr_l4p5
+  full_name: ZEPHYR on NUCLEO-L4P5ZG
+  vendor: st
+  socs:
+    - name: stm32l4p5xx
+

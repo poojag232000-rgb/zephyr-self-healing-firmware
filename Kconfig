@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+
+mainmenu "ZEPHYR Self-Healing Firmware Platform"
+
+source "Kconfig.zephyr"
+
+config APP_INJECT_WORKER_B_FAILURE
+	bool "Stop Worker B to validate watchdog detection"
+	help
+	  Deliberately blocks Worker B after five heartbeats. This option is only
+	  for the controlled hardware-validation build and is disabled by default.
+

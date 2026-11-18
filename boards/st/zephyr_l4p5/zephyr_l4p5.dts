@@ -1,0 +1,105 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Minimal, component-free board definition for NUCLEO-L4P5ZG.
+ */
+
+/dts-v1/;
+#include <st/l4/stm32l4p5Xi.dtsi>
+#include <st/l4/stm32l4p5zgtxp-pinctrl.dtsi>
+
+/ {
+	model = "ZEPHYR on NUCLEO-L4P5ZG";
+	compatible = "st,nucleo-l4p5zg";
+
+	chosen {
+		zephyr,console = &lpuart1;
+		zephyr,shell-uart = &lpuart1;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,system-timer-companion = &rtc;
+	};
+
+	aliases {
+		watchdog0 = &iwdg;
+	};
+};
+
+/* Use only internal clocks during initial board bring-up. */
+&clk_hsi {
+	status = "okay";
+};
+
+&clk_lsi {
+	status = "okay";
+};
+
+&pll {
+	div-m = <4>;
+	mul-n = <40>;
+	div-p = <7>;
+	div-q = <2>;
+	div-r = <2>;
+	clocks = <&clk_hsi>;
+	status = "okay";
+};
+
+&rcc {
+	clocks = <&pll>;
+	clock-frequency = <DT_FREQ_M(80)>;
+	ahb-prescaler = <1>;
+	apb1-prescaler = <1>;
+	apb2-prescaler = <1>;
+};
+
+/* PG7/PG8 are connected to the on-board ST-LINK Virtual COM Port. */
+&lpuart1 {
+	pinctrl-0 = <&lpuart1_tx_pg7 &lpuart1_rx_pg8>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
+
+&iwdg {
+	status = "okay";
+};
+
+/* Internal LSI-clocked RTC keeps kernel time and wakes the CPU from STOP2. */
+&rtc {
+	clocks = <&rcc STM32_CLOCK(APB1, 28)>,
+		 <&rcc STM32_SRC_LSI RTC_SEL(2)>;
+	status = "okay";
+	wakeup-source;
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 DT_SIZE_K(64)>;
+			read-only;
+		};
+
+		slot0_partition: partition@10000 {
+			label = "image-0";
+			reg = <0x00010000 DT_SIZE_K(448)>;
+		};
+
+		slot1_partition: partition@80000 {
+			label = "image-1";
+			reg = <0x00080000 DT_SIZE_K(448)>;
+		};
+
+		/* Final 64 KiB remains reserved for wear-levelled crash records. */
+		storage_partition: partition@f0000 {
+			label = "storage";
+			reg = <0x000f0000 DT_SIZE_K(64)>;
+		};
+	};
+};
+

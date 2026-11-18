@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_ZEPHYR_L4P5
+	select SOC_STM32L4P5XX
+

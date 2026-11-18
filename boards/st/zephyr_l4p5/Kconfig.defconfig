@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_ZEPHYR_L4P5
+
+config ARM_MPU
+	default y
+
+endif # BOARD_ZEPHYR_L4P5
+

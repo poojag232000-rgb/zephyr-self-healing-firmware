@@ -1,0 +1,14 @@
+identifier: zephyr_l4p5
+name: ZEPHYR on NUCLEO-L4P5ZG
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+ram: 320
+flash: 1024
+supported:
+  - gpio
+  - watchdog
+vendor: st
+

@@ -1,0 +1,10 @@
+/build*/
+/keys/*.pem
+/.venv/
+/.west/
+/zephyr/
+/modules/
+/bootloader/
+*.log
+.vscode/
+
